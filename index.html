@@ -1,0 +1,58 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><link rel="icon" href="logo-144.png"><title>Threadbell for Jira: documentation</title><meta name="description" content="Send Jira issue updates to Google Chat spaces with filters, threads and a delivery log. Setup guide and troubleshooting."><main><nav><img src="logo-144.png" alt=""><b>Threadbell</b><a href="index.html">Documentation</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+<h1>Threadbell: Google Chat notifications for Jira</h1>
+<p>Threadbell sends Jira issue updates to Google Chat spaces. You decide which events, from which issues, go to which space.</p>
+
+<h2>Set up your first rule</h2>
+<ol>
+<li>In Google Chat, open the space, then <b>Apps &amp; integrations → Webhooks → Add webhook</b>. Give it a name and copy the URL. Incoming webhooks need a Google Workspace account.</li>
+<li>In Jira, open <b>Apps → Manage apps → Google Chat notifications</b> (Jira admins), or <b>Project settings → Google Chat</b> (project admins).</li>
+<li>Select <b>Add rule</b>, give it a name and paste the webhook URL.</li>
+<li>Select <b>Send a test message</b>. A sample card should appear in the space.</li>
+<li>Choose the events and filters, then save.</li>
+</ol>
+
+<h2>Events</h2>
+<table>
+<tr><th>Event</th><th>Sent when</th></tr>
+<tr><td>Created</td><td>An issue is created.</td></tr>
+<tr><td>Status changed</td><td>An issue moves to another status. You can limit this to chosen "from" and "to" statuses.</td></tr>
+<tr><td>Resolved</td><td>An issue gets a resolution.</td></tr>
+<tr><td>Assigned</td><td>The assignee changes.</td></tr>
+<tr><td>Priority changed</td><td>The priority changes.</td></tr>
+<tr><td>Commented</td><td>A comment is added.</td></tr>
+<tr><td>Updated</td><td>Other fields change. Ranking and time tracking changes are ignored.</td></tr>
+<tr><td>Deleted</td><td>An issue is deleted.</td></tr>
+</table>
+
+<h2>Filters</h2>
+<ul>
+<li><b>Projects</b>: one, several or all (admin page). A rule made in project settings covers that project.</li>
+<li><b>Issue types</b> and <b>priorities</b>.</li>
+<li><b>JQL</b>: any query, for example <code>labels = customer AND priority in (Highest, High)</code>. The query is checked when you save.</li>
+<li><b>Ignore Jira Automation</b>: skips changes made by automation rules.</li>
+</ul>
+
+<h2>Message options</h2>
+<ul>
+<li><b>Card</b> (issue header, what changed, chosen fields, Open button) or <b>compact</b> (one line of text).</li>
+<li><b>One thread per issue</b>: follow-ups for the same issue go in the same thread.</li>
+<li><b>Mention @all</b> for the priorities you choose.</li>
+<li><b>Include description</b> when an issue is created.</li>
+</ul>
+
+<h2>Delivery log and troubleshooting</h2>
+<p>The <b>Delivery log</b> tab lists the latest messages and the reason for any failure.</p>
+<table>
+<tr><th>Message</th><th>What to do</th></tr>
+<tr><td>Webhook not found</td><td>The webhook or the space was deleted. Create a new webhook and update the rule.</td></tr>
+<tr><td>Webhook refused</td><td>The URL is incomplete or the space no longer allows webhooks. Copy the URL again.</td></tr>
+<tr><td>Rate limited</td><td>Google Chat accepts about one message per second per space. Threadbell retries automatically.</td></tr>
+<tr><td>Nothing arrives</td><td>Check that the rule is on, then check its filters against the issue. A change made by the app's own account is never sent.</td></tr>
+</table>
+
+<h2>Data and security</h2>
+<p>Threadbell runs on Atlassian Forge. It stores your rules, the webhook URLs (as encrypted secrets), a delivery log of up to 150 entries and a monthly message counter. It sends messages only to <code>chat.googleapis.com</code>. See the <a href="privacy.html">privacy policy</a>.</p>
+
+<h2>Support</h2>
+<p>Email <a href="mailto:quietbell.apps@proton.me">quietbell.apps@proton.me</a>. We answer within two business days.</p>
+</main>
