@@ -12,7 +12,7 @@
 <li>A delivery log of up to 300 entries kept 30 days: time, rule, issue key, event type, result and error reason. Personal alerts are not logged.</li>
 <li>Short-lived markers (one hour) that stop the same Jira event being sent twice.</li>
 </ul>
-<p>The app does not store issue content, comments, user names or email addresses. Account IDs are stored only for people who turn on personal alerts. We run no servers of our own and have no access to data stored in your site's Forge storage.</p>
+<p>The app does not store issue content, comments, user names or email addresses. Account IDs are stored only for people who turn on personal alerts. Once a day the app reports these account IDs to Atlassian, as Atlassian requires, and erases the settings of any account that has been closed. We run no servers of our own and have no access to data stored in your site's Forge storage.</p>
 
 <h2>What the app sends, and where</h2>
 <p>When an issue event matches one of your rules, the app reads the issue from Jira and sends a message to the Google Chat webhook you configured, at <code>chat.googleapis.com</code>. Depending on the rule's settings, the message can contain the issue key, summary, type, project name, status, priority, the display names of the assignee and of the person who made the change, and excerpts of the comment and description. Google processes that message under your organisation's Google Workspace agreement.</p>
