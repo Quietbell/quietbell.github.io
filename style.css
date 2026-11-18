@@ -7,3 +7,8 @@ nav img{width:32px;height:32px}nav b{margin-right:auto}
 a{color:var(--accent)}h1{font-size:1.8rem;line-height:1.2}h2{font-size:1.2rem;margin-top:32px}
 code{background:rgba(127,127,127,.15);padding:1px 5px;border-radius:4px;font-size:.9em}
 .muted{color:var(--muted)}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+pre{background:rgba(127,127,127,.12);padding:12px;border-radius:6px;overflow-x:auto;font-size:.85em;line-height:1.45}
+.note{border-left:4px solid var(--accent);padding:8px 12px;background:rgba(11,110,91,.07);border-radius:4px}
+.cta{display:inline-block;background:var(--accent);color:#fff;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:600}
+@media (prefers-color-scheme:dark){.cta{color:#0b1412}}
+.scroll{overflow-x:auto}footer{margin-top:48px;border-top:1px solid var(--line);padding-top:12px;font-size:.9em}

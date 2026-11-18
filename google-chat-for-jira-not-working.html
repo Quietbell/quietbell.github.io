@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><link rel="icon" href="logo-144.png">
+<title>Jira notifications not arriving in Google Chat: a checklist</title>
+<meta name="description" content="Jira updates not showing up in Google Chat? Check the webhook, your Google Workspace settings, rate limits and Jira permissions. Error codes explained.">
+<link rel="canonical" href="https://quietbell.github.io/google-chat-for-jira-not-working.html">
+<main><nav><img src="logo-144.png" alt=""><b>Threadbell</b><a href="index.html">Documentation</a><a href="guides.html">Guides</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+<h1>Jira notifications not arriving in Google Chat? A checklist</h1>
+<p class="muted">Updated 18 November 2026</p>
+<p>Work through these checks in order. Most problems come from the webhook or from Google Workspace settings, not from Jira.</p>
+
+<h2>1. Is it the right kind of Google account?</h2>
+<p>Incoming webhooks need a Business or Enterprise Google Workspace account. They can't be set up from a personal Gmail account, nor from the Chat mobile app: use Chat in a browser.</p>
+
+<h2>2. Does your Workspace allow webhooks and Chat apps?</h2>
+<p>Your Workspace admin controls this in the Admin console under <b>Apps → Google Workspace → Google Chat → Chat apps</b>: the setting "Allow users to add and use incoming webhooks" must be on, and Chat apps must be allowed for your team. If the option is missing for everyone in your company, ask your admin.</p>
+
+<h2>3. Does the webhook still exist?</h2>
+<p>If someone removed the webhook from the space, or deleted the space, messages can't be delivered anymore. Create a new webhook in the space and paste the new URL wherever Jira uses it.</p>
+
+<h2>4. Read the error code</h2>
+<div class="scroll"><table>
+<tr><th>Code</th><th>What it usually means</th><th>What to do</th></tr>
+<tr><td>400</td><td>Google refused the request: for example "API key not valid" when the URL was cut off, or a message body it can't read.</td><td>Copy the full webhook URL again, including <code>key</code> and <code>token</code>. If you build the JSON yourself, escape quotes and line breaks.</td></tr>
+<tr><td>401 / 403</td><td>The webhook isn't allowed to post, for example after webhooks were turned off for your organization.</td><td>Copy the URL again, then check the Workspace settings above.</td></tr>
+<tr><td>404</td><td>The webhook or the space no longer exists.</td><td>Create a new webhook.</td></tr>
+<tr><td>429</td><td>Too many messages: Google allows about one request per second per space, shared by all webhooks in that space.</td><td>Slow down or retry later. Bulk edits in Jira often hit this.</td></tr>
+<tr><td>5xx</td><td>Google Chat is temporarily unavailable.</td><td>Retry a little later.</td></tr>
+</table></div>
+
+<h2>5. Does the rule match the issue?</h2>
+<p>Check the project, issue type, status and JQL filters against the issue you changed. Changes made by an app's own account, or by Jira Automation when you chose to ignore it, are often skipped on purpose.</p>
+
+<h2>6. Restricted comments</h2>
+<p>Comments limited to a role or a group, and internal notes in Jira Service Management, should never be posted to a chat space. A good integration skips them silently.</p>
+
+<h2>Still stuck with the app you use?</h2>
+<p>If you use Google's "Google Chat for Jira Cloud" app, check its listing and support page first. If you need clear error messages, Threadbell shows each delivery and the reason for any failure in plain words, with automatic retries.</p>
+<p><a class="cta" href="https://marketplace.atlassian.com/apps/1458900419">Try Threadbell, free for up to 10 users</a></p>
+<p>See also: <a href="jira-to-google-chat.html">How to send Jira notifications to Google Chat</a>.</p>
+<footer class="muted">Threadbell is made by Quietbell. Jira and Atlassian are trademarks of Atlassian. Google Chat is a trademark of Google LLC. This site is not affiliated with or endorsed by Atlassian or Google.</footer></main>

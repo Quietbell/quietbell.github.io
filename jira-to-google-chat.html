@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><link rel="icon" href="logo-144.png">
+<title>How to send Jira notifications to Google Chat (3 ways)</title>
+<meta name="description" content="Three ways to post Jira issue updates in Google Chat: a free Jira Automation web request, Google's app, or a dedicated app with filters and threads. Step-by-step, with a ready-to-paste JSON body.">
+<link rel="canonical" href="https://quietbell.github.io/jira-to-google-chat.html">
+<main><nav><img src="logo-144.png" alt=""><b>Threadbell</b><a href="index.html">Documentation</a><a href="guides.html">Guides</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+<h1>How to send Jira notifications to Google Chat</h1>
+<p class="muted">Updated 18 November 2026 · 6 min read</p>
+<p>Google Chat has no built-in Jira connection, but there are three reliable ways to get Jira updates into a space. All three start with the same step: an <b>incoming webhook</b> in Google Chat.</p>
+
+<h2>Step 0: create a Google Chat webhook</h2>
+<ol>
+<li>Open Google Chat in a browser (webhooks can't be set up from the mobile app) and open the space that should receive the updates.</li>
+<li>Click the arrow next to the space name, then <b>Apps &amp; integrations</b>.</li>
+<li>Click <b>Add webhooks</b>, give it a name such as "Jira" and click <b>Save</b>.</li>
+<li>Click <b>More</b> next to the webhook, then <b>Copy link</b>. The URL starts with <code>https://chat.googleapis.com/v1/spaces/</code> and contains a secret token: treat it like a password, anyone with it can post in the space.</li>
+</ol>
+<p class="note">Webhooks need a Business or Enterprise Google Workspace account, and your organization must allow them. If you don't see the option, ask your Workspace admin to check <b>Apps → Google Workspace → Google Chat → Chat apps</b> in the Admin console, setting "Allow users to add and use incoming webhooks".</p>
+
+<h2>Option 1: Jira Automation (free, do it yourself)</h2>
+<p>Good for one or two simple alerts. In your Jira project:</p>
+<ol>
+<li>Open <b>Project settings → Automation → Create rule</b>.</li>
+<li>Pick a trigger, for example <b>Work item transitioned</b> or <b>Work item created</b>. Add conditions if you need them.</li>
+<li>Add the action <b>Send web request</b>: paste the webhook URL, method <b>POST</b>, header <code>Content-Type: application/json; charset=UTF-8</code>, body <b>Custom data</b>:</li>
+</ol>
+<pre>{
+  "text": "*{{issue.key}}* {{issue.summary.jsonEncode}}\nStatus: {{issue.status.name}} · by {{initiator.displayName}}\n&lt;{{issue.url}}|Open in Jira&gt;"
+}</pre>
+<p>Limits to know: each run counts toward your monthly Automation quota, every rule is one event for one space, messages don't group by issue, and failures only show in the rule's audit log.</p>
+
+<h2>Option 2: Google's "Google Chat for Jira Cloud" app</h2>
+<p>Free, published by Google on the Atlassian Marketplace. It is the most installed option. Read its recent reviews before you choose: on 18 November 2026 it was rated 2.30 out of 5 from 109 reviews, and several reviews mention setup problems.</p>
+
+<h2>Option 3: a dedicated app (Threadbell)</h2>
+<p>Threadbell is built for teams that want only the updates that matter, in a readable form:</p>
+<ul>
+<li>Rules per space: pick events, projects, issue types, priorities, from/to status, or any JQL.</li>
+<li>One thread per issue, so follow-ups stay together.</li>
+<li>Daily digests (for example "open bugs at 9:00") and personal alerts when someone is assigned or mentioned.</li>
+<li>A delivery log that explains every failure, and automatic retries.</li>
+<li>Runs on Atlassian Forge and talks only to the Google Chat API. Free for up to 10 users.</li>
+</ul>
+<p><a class="cta" href="https://marketplace.atlassian.com/apps/1458900419">Threadbell on the Atlassian Marketplace</a></p>
+
+<h2>Which one should you pick?</h2>
+<div class="scroll"><table>
+<tr><th></th><th>Automation</th><th>Google's app</th><th>Threadbell</th></tr>
+<tr><td>Cost</td><td>Included in Jira</td><td>Free</td><td>Free up to 10 users</td></tr>
+<tr><td>Filters</td><td>Conditions per rule</td><td>See its listing</td><td>Projects, types, priorities, status, JQL</td></tr>
+<tr><td>One thread per issue</td><td>No</td><td>See its listing</td><td>Yes</td></tr>
+<tr><td>Daily digest</td><td>Scheduled rule, manual</td><td>See its listing</td><td>Yes</td></tr>
+<tr><td>Delivery errors</td><td>Audit log</td><td>See its listing</td><td>Delivery log with reasons</td></tr>
+</table></div>
+<p>Next: <a href="google-chat-for-jira-not-working.html">Jira notifications not arriving in Google Chat? A checklist</a>.</p>
+<footer class="muted">Threadbell is made by Quietbell. Jira and Atlassian are trademarks of Atlassian. Google Chat is a trademark of Google LLC. This site is not affiliated with or endorsed by Atlassian or Google.</footer></main>

@@ -1,11 +1,13 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><link rel="icon" href="logo-144.png"><title>Threadbell for Jira: documentation</title><meta name="description" content="Send Jira issue updates to Google Chat spaces with filters, threads and a delivery log. Setup guide and troubleshooting."><main><nav><img src="logo-144.png" alt=""><b>Threadbell</b><a href="index.html">Documentation</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><link rel="icon" href="logo-144.png"><title>Threadbell for Jira: documentation</title><meta name="description" content="Send Jira issue updates to Google Chat spaces with filters, threads and a delivery log. Setup guide and troubleshooting."><main><nav><img src="logo-144.png" alt=""><b>Threadbell</b><a href="index.html">Documentation</a><a href="guides.html">Guides</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
 <h1>Threadbell: Google Chat notifications for Jira</h1>
 <p>Threadbell sends Jira issue updates to Google Chat spaces. You decide which events, from which issues, go to which space.</p>
+<p><a class="cta" href="https://marketplace.atlassian.com/apps/1458900419">Get Threadbell on the Atlassian Marketplace</a> <span class="muted">Free for up to 10 users.</span></p>
+<p class="muted">New to Jira and Google Chat? Read <a href="jira-to-google-chat.html">how to send Jira notifications to Google Chat</a>.</p>
 
 <h2>Set up your first rule</h2>
 <ol>
-<li>In Google Chat, open the space, then <b>Apps &amp; integrations → Webhooks → Add webhook</b>. Give it a name and copy the URL. Incoming webhooks need a Google Workspace account.</li>
-<li>In Jira, open <b>Apps → Manage apps → Google Chat notifications</b> (Jira admins), or <b>Project settings → Google Chat</b> (project admins).</li>
+<li>In Google Chat in a browser, open the space, click the arrow next to its name, then <b>Apps &amp; integrations → Add webhooks</b>. Name it, save, then <b>More → Copy link</b>. Incoming webhooks need a Business or Enterprise Google Workspace account.</li>
+<li>In Jira, open <b>Settings (gear) → Apps</b> and choose <b>Google Chat notifications</b> in the sidebar (Jira admins), or <b>Project settings → Google Chat</b> (project admins).</li>
 <li>Select <b>Add rule</b>, give it a name and paste the webhook URL.</li>
 <li>Select <b>Send a test message</b>. A sample card should appear in the space.</li>
 <li>Choose the events and filters, then save.</li>
