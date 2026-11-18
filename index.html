@@ -40,6 +40,12 @@
 <li><b>Include description</b> when an issue is created.</li>
 </ul>
 
+<h2>Daily digests</h2>
+<p>Open the <b>Digests</b> tab to send one summary a day to a space: choose the projects (or a JQL filter limited to them), the days, the hour in your time zone and how to group the issues (status, assignee, priority or none). An empty digest is not sent. Project admins manage digests for their own project.</p>
+
+<h2>Personal alerts</h2>
+<p>Each person can open <b>My Google Chat alerts</b> (Apps menu in Jira), paste a webhook of their own space or direct-message space and choose: assigned to me, mentioned, comments and status changes on my issues, and issues I watch. Threadbell checks with Jira that the person can open the issue before sending anything. Your own changes never alert you. A site admin can turn personal alerts off in the <b>Personal alerts</b> tab.</p>
+
 <h2>Delivery log and troubleshooting</h2>
 <p>The <b>Delivery log</b> tab lists the latest messages and the reason for any failure.</p>
 <table>
@@ -51,7 +57,7 @@
 </table>
 
 <h2>Data and security</h2>
-<p>Threadbell runs on Atlassian Forge. It stores your rules, the webhook URLs (as encrypted secrets), a delivery log of up to 150 entries and a monthly message counter. It sends messages only to <code>chat.googleapis.com</code>. See the <a href="privacy.html">privacy policy</a>.</p>
+<p>Threadbell runs on Atlassian Forge. It stores your rules and digests, the webhook URLs (as encrypted secrets), the settings of people who turned on personal alerts (account ID, space, chosen alerts) and a delivery log of up to 300 entries kept 30 days. It sends messages only to <code>chat.googleapis.com</code>. See the <a href="privacy.html">privacy policy</a>.</p>
 
 <h2>Support</h2>
 <p>Email <a href="mailto:quietbell.apps@proton.me">quietbell.apps@proton.me</a>. We answer within two business days.</p>

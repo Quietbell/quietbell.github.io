@@ -6,12 +6,13 @@
 <h2>What the app stores</h2>
 <p>The app stores the following in Atlassian Forge storage, inside Atlassian's infrastructure and separately for each Jira site:</p>
 <ul>
-<li>Your notification rules: name, events, filters and message options.</li>
-<li>The Google Chat webhook URL of each rule, kept as an encrypted secret.</li>
-<li>A delivery log of up to 150 entries: time, rule, issue key, event type, result and error reason.</li>
-<li>A count of messages sent per month.</li>
+<li>Your notification rules and daily digests: name, events, filters, schedule and message options.</li>
+<li>The Google Chat webhook URL of each rule, digest and personal alert, kept as an encrypted secret.</li>
+<li>For each person who turns on personal alerts: their Atlassian account ID, the Google Chat space they chose, the alert types they ticked and the result of their last delivery. They can delete all of it from the same page.</li>
+<li>A delivery log of up to 300 entries kept 30 days: time, rule, issue key, event type, result and error reason. Personal alerts are not logged.</li>
+<li>Short-lived markers (one hour) that stop the same Jira event being sent twice.</li>
 </ul>
-<p>The app does not store issue content, comments, user names, email addresses or account IDs. We run no servers of our own and have no access to data stored in your site's Forge storage.</p>
+<p>The app does not store issue content, comments, user names or email addresses. Account IDs are stored only for people who turn on personal alerts. We run no servers of our own and have no access to data stored in your site's Forge storage.</p>
 
 <h2>What the app sends, and where</h2>
 <p>When an issue event matches one of your rules, the app reads the issue from Jira and sends a message to the Google Chat webhook you configured, at <code>chat.googleapis.com</code>. Depending on the rule's settings, the message can contain the issue key, summary, type, project name, status, priority, the display names of the assignee and of the person who made the change, and excerpts of the comment and description. Google processes that message under your organisation's Google Workspace agreement.</p>
@@ -21,7 +22,7 @@
 <p>As a Marketplace partner we receive from Atlassian the licensing and billing contact details of customers who install the app. We use them only for support, billing questions and important notices about the app.</p>
 
 <h2>Retention and deletion</h2>
-<p>Deleting a rule deletes its webhook URL. Uninstalling the app deletes all data the app stored for your site, under Atlassian's Forge data retention rules. The delivery log keeps only the latest 150 entries.</p>
+<p>Deleting a rule deletes its webhook URL. Uninstalling the app deletes all data the app stored for your site, under Atlassian's Forge data retention rules. The delivery log keeps only the latest 300 entries, for 30 days.</p>
 
 <h2>Support requests</h2>
 <p>If you email us, we keep your message for as long as needed to answer and to follow up, then delete it within 24 months.</p>
