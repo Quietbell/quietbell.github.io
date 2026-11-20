@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><link rel="icon" href="logo-144.png">
+<title>Sprint started, sprint completed, version released: Jira team events in Google Chat</title>
+<meta name="description" content="Announce sprint starts, sprint completions and released versions from Jira in Google Chat, with the goal and dates. What Jira Automation can and cannot do, and the app alternative.">
+<link rel="canonical" href="https://quietbell.github.io/jira-sprint-release-notifications-google-chat.html">
+<main><nav><img src="logo-144.png" alt=""><b>Threadbell</b><a href="index.html">Documentation</a><a href="guides.html">Guides</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+<h1>Sprint and release announcements in Google Chat</h1>
+<p class="muted">Updated 20 November 2026 · 3 min read</p>
+<p>Issue notifications are for the people doing the work. Sprint and release events are for everyone else: product, support, sales. Three events are worth a message in a wider Google Chat space.</p>
+
+<h2>The three events</h2>
+<table><tr><th>Event</th><th>What the message should say</th></tr>
+<tr><td>Sprint started</td><td>Sprint name, <b>goal</b>, start and end dates, link to the board</td></tr>
+<tr><td>Sprint completed</td><td>Sprint name, dates, link to the board (the report is one click away)</td></tr>
+<tr><td>Version released</td><td>Version name, release date, link to the version page with the issue list</td></tr>
+</table>
+
+<h2>With Jira Automation</h2>
+<p>Jira Automation has triggers for <b>Sprint created / started / completed</b> and <b>Version created / updated / released</b>. Pair them with <b>Send web request</b> to a Google Chat webhook:</p>
+<pre>{
+  "text": "🏁 *Sprint started: {{sprint.name}}*\n{{sprint.goal}}\n{{sprint.startDate.shortDate}} → {{sprint.endDate.shortDate}}"
+}</pre>
+<p>Works well. Two limits: the goal is not JSON-escaped (use <code>{{sprint.goal.jsonEncode}}</code>), and there is no link to the board unless you hard-code it.</p>
+
+<h2>With Threadbell</h2>
+<p>In <a href="index.html">Threadbell</a>, tick <b>Team events</b> in a rule: sprint started, sprint completed, version released. Messages are cards with the goal, the dates, the project and an <b>Open in Jira</b> button, in the language of the space (English, French, German, Spanish, Portuguese). The template <b>Sprints and releases</b> creates a rule with only these three events, for a company-wide space.</p>
+<p class="note">Sprint events need Jira Software (a Scrum board). Version events work in any Jira project with releases. Threadbell needs no additional permission for either.</p>
+
+<h2>Where to post them</h2>
+<ul>
+<li><b>#product-updates</b> or <b>#general</b>: version released only.</li>
+<li><b>#team-xyz</b>: sprint started and completed, next to the issue thread notifications.</li>
+<li>Avoid the on-call space: these are not alerts.</li>
+</ul>
+
+<h2>Related</h2>
+<ul>
+<li><a href="jira-to-google-chat.html">How to send Jira notifications to Google Chat (3 ways)</a></li>
+<li><a href="jira-daily-digest-google-chat.html">A daily Jira digest in Google Chat</a></li>
+</ul>
+<footer class="muted">Threadbell is made by Quietbell. Jira, Jira Software and Atlassian are trademarks of Atlassian. Google Chat is a trademark of Google LLC. This site is not affiliated with or endorsed by Atlassian or Google.</footer></main>

@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><link rel="icon" href="logo-144.png">
+<title>Quiet hours for Jira notifications in Google Chat</title>
+<meta name="description" content="Stop Jira notifications in Google Chat at night and on weekends without losing anything: quiet hours with a morning summary, grouped updates for bursts, and what to keep live.">
+<link rel="canonical" href="https://quietbell.github.io/jira-google-chat-quiet-hours.html">
+<main><nav><img src="logo-144.png" alt=""><b>Threadbell</b><a href="index.html">Documentation</a><a href="guides.html">Guides</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+<h1>Quiet hours for Jira notifications in Google Chat</h1>
+<p class="muted">Updated 20 November 2026 · 4 min read</p>
+<p>A Jira space in Google Chat is useful between 9 and 18. At 23:40 it is a phone buzzing because a colleague in another time zone closed six tickets. People solve this by muting the space, and then they miss the one message that mattered. Quiet hours solve it properly.</p>
+
+<h2>What quiet hours should do</h2>
+<ul>
+<li><b>Hold</b>, not drop: updates made during the night are kept.</li>
+<li><b>One summary</b> when the quiet ends: "While you were away · 4 issues", with the number of updates per issue and a link.</li>
+<li><b>Exceptions</b> stay live: a new Highest-priority bug should still ring.</li>
+<li><b>Per space</b>, in the space's time zone: the Lisbon team and the Toronto team do not share a night.</li>
+</ul>
+
+<h2>Why muting in Google Chat is not enough</h2>
+<p>Muting a space silences everything, including <code>@all</code> and the critical alerts. It also hides the backlog of messages, so the next morning starts with a scroll through 40 cards. A digest of the night is faster to read and nothing is lost.</p>
+
+<h2>Grouped updates: the other half of the noise</h2>
+<p>Quiet hours fix the night. Bursts fix the day: a release that transitions 30 issues in two minutes, a bulk edit of labels, a bot that comments on every build. The answer is <b>grouping</b>: when several updates hit the same issue within a short window, send one message with the list of changes instead of one message per change. Keep it short (2 to 5 minutes), so live notifications still feel live.</p>
+
+<h2>Setting it up in Threadbell</h2>
+<ol>
+<li>Open the rule of the space and the <b>Quiet hours</b> section.</li>
+<li>Choose from/to and the time zone, for example 20:00 to 08:00, Europe/Paris.</li>
+<li>Mode <b>Summary</b> (one "While you were away" message at the end) or <b>Silence</b> (nothing kept) for spaces that are pure noise at night.</li>
+<li>Optional: <b>Group updates</b> on the same issue within 2, 5, 10 or 15 minutes.</li>
+<li>Keep a separate rule with no quiet hours for Highest priority only, posted with <code>@all</code>.</li>
+</ol>
+<p class="note">Quiet hours apply to the space, not to people. For personal alerts ("assigned to me", "mentioned"), each person sets their own in <b>My Google Chat alerts</b>.</p>
+
+<h2>Doing it with Jira Automation instead</h2>
+<p>Possible, but heavy: a condition on <code>{{now.hour}}</code> can skip the web request at night, and a second scheduled rule can post a morning search. You lose the per-issue counts and the grouping, and you maintain two rules per space. Fine for one space; not for ten.</p>
+
+<h2>Related</h2>
+<ul>
+<li><a href="jira-daily-digest-google-chat.html">A daily Jira digest in Google Chat</a></li>
+<li><a href="jira-to-google-chat.html">How to send Jira notifications to Google Chat (3 ways)</a></li>
+</ul>
+<footer class="muted">Threadbell is made by Quietbell. Jira and Atlassian are trademarks of Atlassian. Google Chat is a trademark of Google LLC. This site is not affiliated with or endorsed by Atlassian or Google.</footer></main>

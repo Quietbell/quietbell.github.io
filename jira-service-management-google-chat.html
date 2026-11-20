@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><link rel="icon" href="logo-144.png">
+<title>Jira Service Management alerts in Google Chat: what to send, what to keep out</title>
+<meta name="description" content="How to get Jira Service Management requests into Google Chat without leaking internal notes: new requests, SLA at risk, waiting on customer. Three setups compared.">
+<link rel="canonical" href="https://quietbell.github.io/jira-service-management-google-chat.html">
+<main><nav><img src="logo-144.png" alt=""><b>Threadbell</b><a href="index.html">Documentation</a><a href="guides.html">Guides</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+<h1>Jira Service Management alerts in Google Chat</h1>
+<p class="muted">Updated 20 November 2026 · 5 min read</p>
+<p>Support teams on Google Workspace want three things in Chat: to see new requests arrive, to know when an SLA is about to slip, and to never, ever post an internal note in a space a customer could read. Here is what works with Jira Service Management (JSM) Cloud today.</p>
+
+<h2>What is worth sending</h2>
+<table><tr><th>Event</th><th>Why</th><th>Where</th></tr>
+<tr><td>New request created</td><td>Triage starts in the space, not in e-mail</td><td>Team space</td></tr>
+<tr><td>Request moved to <i>Waiting for customer</i> / back to <i>In progress</i></td><td>Shows who holds the ball</td><td>Team space, in the request's thread</td></tr>
+<tr><td>Priority raised to Highest</td><td>Pull people in now</td><td>Team space with <code>@all</code></td></tr>
+<tr><td>SLA at risk (for example 30 min before <i>Time to first response</i> breaches)</td><td>The only alert that saves an SLA</td><td>Team space, or the assignee's personal space</td></tr>
+<tr><td>Public comment from the customer</td><td>Replies get faster</td><td>Request's thread</td></tr>
+<tr><td>Internal notes</td><td><b>Never.</b> Chat spaces are shared and searchable</td><td>Nowhere</td></tr>
+</table>
+
+<h2>Three ways to set it up</h2>
+<h3>1. JSM automation + Send web request (free)</h3>
+<p>JSM automation has the triggers you need: <b>Work item created</b>, <b>SLA threshold breached</b> (choose the SLA and "will breach in 30 minutes"), <b>Work item transitioned</b>. The action is <b>Send web request</b> to a Google Chat webhook, see <a href="jira-automation-google-chat-card.html">the card template</a>. Two rules to know: the request is not retried if Google is slow or down, and a rule on <b>Work item commented</b> sends internal notes too unless you add the condition <code>{{comment.internal}}</code> equals <code>false</code>. Test it with a note before you trust it.</p>
+<h3>2. Google's app for Jira</h3>
+<p>Free and installed from the Marketplace. It covers project-level notifications and lets people get their own alerts in a direct message with the app. It does not distinguish internal notes from public comments in its settings, so most JSM teams only use it for creation and status events.</p>
+<h3>3. A dedicated notifications app (Threadbell)</h3>
+<p><a href="index.html">Threadbell</a> treats JSM differently by design:</p>
+<ul>
+<li><b>Internal notes and restricted comments are never sent.</b> Not optional, not configurable: the app checks the comment's visibility in Jira before posting.</li>
+<li>One thread per request, so the whole life of a ticket is readable in one place.</li>
+<li>Rules per space: priority, status transitions, issue type, and any JQL (request type included) such as <code>"Time to resolution" &lt; remaining("30m")</code> for a digest.</li>
+<li>Daily digests: "requests waiting on us since more than 24 h" every morning at 9:00.</li>
+<li>Personal alerts for agents: assigned to me, mentioned, my requests commented.</li>
+<li>Quiet hours for the on-call space, with one summary when the quiet ends.</li>
+</ul>
+<p class="note">Threadbell reads JSM requests through the standard Jira API, with read-only permissions. Agents and customers are never contacted directly: messages only go to the webhooks you configure.</p>
+
+<h2>A setup that works for a 5-person support team</h2>
+<ol>
+<li>Space <b>#support-inbox</b>: new requests, priority raised, customer comments. One thread per request.</li>
+<li>Space <b>#support-oncall</b>: only Highest priority and "SLA will breach in 30 min". Quiet hours 20:00–08:00 with a morning summary.</li>
+<li>Each agent: personal alerts "assigned to me" and "mentioned", in their own space.</li>
+<li>Digest at 9:00 in #support-inbox: open requests older than 2 days, grouped by status.</li>
+</ol>
+
+<h2>Frequently asked</h2>
+<p><b>Can customers see the Google Chat messages?</b> Only if they are members of the space. Keep support spaces internal, and never post internal notes anywhere.</p>
+<p><b>Does this need a Google Workspace plan?</b> Incoming webhooks require Business or Enterprise, and the admin must allow them.</p>
+<p><b>What about Opsgenie / alerts?</b> JSM operations alerts have their own integrations. This page is about requests (the service desk side).</p>
+
+<h2>Related</h2>
+<ul>
+<li><a href="jira-to-google-chat.html">How to send Jira notifications to Google Chat (3 ways)</a></li>
+<li><a href="google-chat-for-jira-not-working.html">Notifications not arriving: a checklist</a></li>
+</ul>
+<footer class="muted">Threadbell is made by Quietbell. Jira, Jira Service Management and Atlassian are trademarks of Atlassian. Google Chat is a trademark of Google LLC. This site is not affiliated with or endorsed by Atlassian or Google.</footer></main>

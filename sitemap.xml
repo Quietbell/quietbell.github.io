@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url><loc>https://quietbell.github.io/</loc><lastmod>2026-11-18</lastmod></url>
-<url><loc>https://quietbell.github.io/guides.html</loc><lastmod>2026-11-18</lastmod></url>
+<url><loc>https://quietbell.github.io/guides.html</loc><lastmod>2026-11-20</lastmod></url>
 <url><loc>https://quietbell.github.io/jira-to-google-chat.html</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://quietbell.github.io/google-chat-for-jira-not-working.html</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://quietbell.github.io/google-chat-jira-apps-compared.html</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://quietbell.github.io/privacy.html</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://quietbell.github.io/terms.html</loc><lastmod>2026-11-18</lastmod></url>
+<url><loc>https://quietbell.github.io/jira-automation-google-chat-card.html</loc><lastmod>2026-11-20</lastmod></url>
+<url><loc>https://quietbell.github.io/jira-service-management-google-chat.html</loc><lastmod>2026-11-20</lastmod></url>
+<url><loc>https://quietbell.github.io/jira-daily-digest-google-chat.html</loc><lastmod>2026-11-20</lastmod></url>
+<url><loc>https://quietbell.github.io/jira-google-chat-quiet-hours.html</loc><lastmod>2026-11-20</lastmod></url>
+<url><loc>https://quietbell.github.io/jira-sprint-release-notifications-google-chat.html</loc><lastmod>2026-11-20</lastmod></url>
 </urlset>

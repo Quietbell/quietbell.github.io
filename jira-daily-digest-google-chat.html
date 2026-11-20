@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><link rel="icon" href="logo-144.png">
+<title>A daily Jira digest in Google Chat: open bugs every morning</title>
+<meta name="description" content="Post one Jira summary per day in Google Chat instead of forty notifications: open bugs at 9:00, what is due this week, overdue work. Two ways, with the JQL to copy.">
+<link rel="canonical" href="https://quietbell.github.io/jira-daily-digest-google-chat.html">
+<main><nav><img src="logo-144.png" alt=""><b>Threadbell</b><a href="index.html">Documentation</a><a href="guides.html">Guides</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+<h1>A daily Jira digest in Google Chat</h1>
+<p class="muted">Updated 20 November 2026 · 4 min read</p>
+<p>Most teams do not need to see every Jira update in Google Chat. They need one message a day that answers one question: <i>what should we look at this morning?</i> A digest does that. Here are the JQL queries that work, and two ways to send them.</p>
+
+<h2>Six digests that teams actually read</h2>
+<table><tr><th>Digest</th><th>JQL</th><th>When</th></tr>
+<tr><td>Open bugs</td><td><code>project = OPS AND issuetype = Bug AND statusCategory != Done ORDER BY priority DESC</code></td><td>Every weekday 9:00</td></tr>
+<tr><td>Due today or tomorrow</td><td><code>project = OPS AND due &lt;= endOfDay(1d) AND statusCategory != Done</code></td><td>Every weekday 8:30</td></tr>
+<tr><td>Overdue</td><td><code>project = OPS AND due &lt; startOfDay() AND statusCategory != Done ORDER BY due ASC</code></td><td>Monday 9:00</td></tr>
+<tr><td>Blocked for a week</td><td><code>project = OPS AND status = Blocked AND status CHANGED TO Blocked BEFORE -7d</code></td><td>Monday and Thursday</td></tr>
+<tr><td>Unassigned</td><td><code>project = OPS AND assignee IS EMPTY AND statusCategory != Done AND created &lt; -1d</code></td><td>Every weekday</td></tr>
+<tr><td>Critical and highest</td><td><code>project = OPS AND priority in (Highest, Critical) AND statusCategory != Done</code></td><td>Twice a day</td></tr>
+</table>
+<p class="note">Test each query in Jira's issue search first. A digest built on a JQL that returns 400 issues is noise again: add <code>ORDER BY</code> and keep the list under 25.</p>
+
+<h2>Way 1: Jira Automation on a schedule (free)</h2>
+<ol>
+<li><b>Project settings → Automation → Create rule</b>, trigger <b>Scheduled</b>. Tick <i>Run a JQL search</i> and paste your query.</li>
+<li>Action <b>Send web request</b> to your Google Chat webhook, method POST, custom data:</li>
+</ol>
+<pre>{
+  "text": "*Open bugs · {{now.format(\"EEE d MMM\")}}*\n{{#issues}}• {{key}} {{summary.jsonEncode}} — {{status.name}}{{^last}}\n{{/}}{{/}}"
+}</pre>
+<p>What to know: the rule runs once for the whole list (good for the Automation quota), but the message is plain text, there is no grouping by status, and when the search returns nothing you get an empty message unless you add a condition on <code>{{issues.size}}</code>.</p>
+
+<h2>Way 2: a digest in Threadbell</h2>
+<p><a href="index.html">Threadbell</a> has a <b>Digests</b> tab made for this:</p>
+<ul>
+<li>Pick a template (the six above are built in) or paste your own JQL; the query is validated against Jira before saving.</li>
+<li>Choose days, hour and time zone. One message, grouped by status, with priority and assignee, capped at 10, 25 or 50 issues, with the count of the rest.</li>
+<li>Nothing is sent when the search is empty (or a one-line "all clear", your choice).</li>
+<li><b>Send now</b> to test without waiting for tomorrow.</li>
+<li>Every digest appears in the delivery log with its result.</li>
+</ul>
+
+<h2>Digest or live notifications?</h2>
+<p>Both, but not in the same space. Live notifications belong where the work happens (a space per team, one thread per issue). Digests belong where decisions are made (a leads space, a support space at the start of the shift). A team that mixes them ends up muting the space.</p>
+
+<h2>Related</h2>
+<ul>
+<li><a href="jira-to-google-chat.html">How to send Jira notifications to Google Chat (3 ways)</a></li>
+<li><a href="jira-google-chat-quiet-hours.html">Quiet hours: no Jira noise at night</a></li>
+</ul>
+<footer class="muted">Threadbell is made by Quietbell. Jira and Atlassian are trademarks of Atlassian. Google Chat is a trademark of Google LLC. This site is not affiliated with or endorsed by Atlassian or Google.</footer></main>

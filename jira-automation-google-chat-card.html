@@ -1,0 +1,71 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><link rel="icon" href="logo-144.png">
+<title>Jira Automation to Google Chat: a card template that works</title>
+<meta name="description" content="A ready-to-paste Google Chat card for the Jira Automation 'Send web request' action: title, status, assignee, Open button, one thread per issue. With the smart values that break JSON and how to avoid them.">
+<link rel="canonical" href="https://quietbell.github.io/jira-automation-google-chat-card.html">
+<main><nav><img src="logo-144.png" alt=""><b>Threadbell</b><a href="index.html">Documentation</a><a href="guides.html">Guides</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+<h1>Jira Automation to Google Chat: a card template that works</h1>
+<p class="muted">Updated 20 November 2026 · 5 min read</p>
+<p>The free way to post Jira updates in Google Chat is a Jira Automation rule with the <b>Send web request</b> action. It works, but most copies you find online post plain text, break on a quote in the issue summary, or create a new message for every update. This page gives you a card that holds, and explains the three traps.</p>
+
+<h2>What you need</h2>
+<ul>
+<li>A Google Chat <b>incoming webhook</b> URL for the space (how to create one: <a href="jira-to-google-chat.html">step 0 of this guide</a>).</li>
+<li>Project admin rights in Jira, to create an Automation rule.</li>
+</ul>
+
+<h2>The rule</h2>
+<ol>
+<li><b>Project settings → Automation → Create rule</b>.</li>
+<li>Trigger: <b>Work item transitioned</b> (or <b>Work item created</b>; one rule per trigger).</li>
+<li>Action: <b>Send web request</b>. Web request URL: paste the webhook URL and add <code>&amp;threadKey={{issue.key}}&amp;messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD</code> at the end. HTTP method <b>POST</b>. Web request body: <b>Custom data</b>.</li>
+</ol>
+<p>Paste this as the custom data:</p>
+<pre>{
+  "cardsV2": [{
+    "cardId": "{{issue.key}}",
+    "card": {
+      "header": {
+        "title": "{{issue.key}} · {{issue.summary.jsonEncode}}",
+        "subtitle": "{{issue.issueType.name}} · {{project.name}} · {{issue.priority.name}}"
+      },
+      "sections": [{
+        "widgets": [
+          { "decoratedText": { "topLabel": "Status", "text": "{{issue.status.name}}" } },
+          { "decoratedText": { "topLabel": "Assignee", "text": "{{issue.assignee.displayName.jsonEncode}}" } },
+          { "decoratedText": { "topLabel": "Changed by", "text": "{{initiator.displayName.jsonEncode}}" } },
+          { "buttonList": { "buttons": [
+            { "text": "Open {{issue.key}}", "onClick": { "openLink": { "url": "{{issue.url}}" } } }
+          ] } }
+        ]
+      }]
+    }
+  }]
+}</pre>
+<p class="note">Leave the <b>Headers</b> section empty unless Jira asks for one. If you add a header, use <code>Content-Type: application/json; charset=UTF-8</code>.</p>
+
+<h2>The three traps</h2>
+<h3>1. A quote in the summary breaks the JSON</h3>
+<p>An issue called <code>Fix "Pay now" button</code> produces invalid JSON and Google answers <code>400</code>. Every text that a person typed must go through <code>.jsonEncode</code>: <code>{{issue.summary.jsonEncode}}</code>, <code>{{issue.assignee.displayName.jsonEncode}}</code>, <code>{{comment.body.jsonEncode}}</code>. Field names chosen from a list (status, priority, issue type) are safe.</p>
+<h3>2. Every update is a new message</h3>
+<p>Without the <code>threadKey</code> parameter in the URL, each run posts a new top-level message, and the space fills up. With <code>threadKey={{issue.key}}</code> and <code>messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD</code>, all updates of one issue land in the same thread. This only works in spaces with threaded replies enabled (the default for new spaces).</p>
+<h3>3. Empty fields</h3>
+<p>An unassigned issue gives an empty <code>text</code> and Google rejects the widget. Either accept the risk, or replace the assignee line with <code>"text": "{{#if(exists(issue.assignee))}}{{issue.assignee.displayName.jsonEncode}}{{/}}{{#if(not(exists(issue.assignee)))}}Unassigned{{/}}"</code>.</p>
+
+<h2>Limits you will hit</h2>
+<ul>
+<li><b>Automation quota:</b> each run counts toward the monthly limit of your plan. Ten rules on a busy project can use it up in a week.</li>
+<li><b>One rule, one space, one event:</b> four events for two spaces means eight rules to maintain.</li>
+<li><b>No retries:</b> if Google answers <code>429</code> or <code>503</code>, the message is lost. The only trace is the rule's audit log.</li>
+<li><b>Restricted comments</b> are sent like any other comment. Jira Service Management internal notes too. Add a condition if your rule posts comments.</li>
+<li><b>Mentions:</b> a summary containing <code>&lt;users/all&gt;</code> would ping the whole space. Rare, but real.</li>
+</ul>
+
+<h2>When a dedicated app is worth it</h2>
+<p>If you need several projects, filters per space, one thread per issue without URL tricks, daily digests, quiet hours or personal alerts, an app does it from one screen and keeps a delivery log. <a href="index.html">Threadbell</a> is built for that, and stays free for up to 10 users. The Automation rule above is the right choice for one simple alert.</p>
+
+<h2>Related</h2>
+<ul>
+<li><a href="jira-to-google-chat.html">How to send Jira notifications to Google Chat (3 ways)</a></li>
+<li><a href="google-chat-for-jira-not-working.html">Jira notifications not arriving in Google Chat: a checklist</a></li>
+</ul>
+<footer class="muted">Threadbell is made by Quietbell. Jira and Atlassian are trademarks of Atlassian. Google Chat is a trademark of Google LLC. This site is not affiliated with or endorsed by Atlassian or Google.</footer></main>
