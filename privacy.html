@@ -1,21 +1,22 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><link rel="icon" href="logo-144.png"><title>Threadbell: privacy policy</title><main><nav><img src="logo-144.png" alt=""><b>Threadbell</b><a href="index.html">Documentation</a><a href="guides.html">Guides</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
 <h1>Privacy policy</h1>
-<p class="muted">Last updated: 18 November 2026</p>
+<p class="muted">Last updated: 20 November 2026</p>
 <p>This policy explains what the Threadbell app for Jira ("the app"), published by Quietbell ("we"), does with data.</p>
 
 <h2>What the app stores</h2>
 <p>The app stores the following in Atlassian Forge storage, inside Atlassian's infrastructure and separately for each Jira site:</p>
 <ul>
 <li>Your notification rules and daily digests: name, events, filters, schedule and message options.</li>
-<li>The Google Chat webhook URL of each rule, digest and personal alert, kept as an encrypted secret.</li>
+<li>The Google Chat webhook URL of each rule, digest, personal alert and Jira Automation destination, kept as an encrypted secret. For Automation destinations we also keep the name you gave them.</li>
 <li>For each person who turns on personal alerts: their Atlassian account ID, the Google Chat space they chose, the alert types they ticked and the result of their last delivery. They can delete all of it from the same page.</li>
 <li>A delivery log of up to 300 entries kept 30 days: time, rule, issue key, event type, result and error reason. Personal alerts are not logged.</li>
 <li>Short-lived markers (one hour) that stop the same Jira event being sent twice.</li>
+<li>Temporary buffers used to group rapid updates into one message and to hold updates during quiet hours: the issue key, comment IDs, the names of the changed fields, statuses and priorities, and a timestamp. They are kept for at most 2 hours (grouping) or 36 hours (quiet hours) and deleted as soon as the message is sent. They contain no issue or comment text and no person's name.</li>
 </ul>
 <p>The app does not store issue content, comments, user names or email addresses. Account IDs are stored only for people who turn on personal alerts. Once a day the app reports these account IDs to Atlassian, as Atlassian requires, and erases the settings of any account that has been closed. We run no servers of our own and have no access to data stored in your site's Forge storage.</p>
 
 <h2>What the app sends, and where</h2>
-<p>When an issue event matches one of your rules, the app reads the issue from Jira and sends a message to the Google Chat webhook you configured, at <code>chat.googleapis.com</code>. Depending on the rule's settings, the message can contain the issue key, summary, type, project name, status, priority, the display names of the assignee and of the person who made the change, and excerpts of the comment and description. Google processes that message under your organisation's Google Workspace agreement.</p>
+<p>When an issue event matches one of your rules, the app reads the issue from Jira and sends a message to the Google Chat webhook you configured, at <code>chat.googleapis.com</code>. Depending on the rule's settings, the message can contain the issue key, summary, type, project name, status, priority, the display names of the assignee and of the person who made the change, and excerpts of the comment and description. For release and sprint events the message contains the version or sprint name, the sprint goal and dates, and the project name. Quiet-hours summaries and daily digests list issue keys, summaries, statuses and assignee names. With the Jira Automation action, the app sends exactly the text your rule composes. Google processes that message under your organisation's Google Workspace agreement.</p>
 <p>The app sends data nowhere else. It contains no analytics and no tracking.</p>
 
 <h2>Data we receive from Atlassian</h2>
